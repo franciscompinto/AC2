@@ -1,0 +1,73 @@
+#include <detpic32.h>
+//funcoes
+void delay(unsigned int );
+
+int posicao=0;
+	static unsigned char  cobra[] ={0x04,0x02,0x01,0x08,0x10,0x20,0x40,0x08};
+int main(void){
+	TRISBbits.TRISB14=1;//rb14 ativo input
+	AD1PCFGbits.PCFG14=0;//rb14 analog
+
+
+	AD1CON1bits.SSRC = 7; // Conversion trigger selection bits: in this
+	 			// mode an internal counter ends sampling and
+				// starts conversion
+	 AD1CON1bits.CLRASAM = 1; // Stop conversions when the 1st A/D converter
+				 // interrupt is generated. At the same time,
+				 // hardware clears the ASAM bit
+	 AD1CON3bits.SAMC = 16; // Sample time is 16 TAD (TAD = 100 ns)
+	 AD1CON2bits.SMPI = 0; // Interrupt is generated after XX samples
+				 // replace XX by the desired number of consecutive samples
+	 AD1CHSbits.CH0SA = 14; // replace YY by the desired input analog channel (0 to 15)
+	 AD1CON1bits.ON = 1; // Enable A/D converter This must the last command of the A/D
+ // configuration sequence 
+	int time=0;
+
+	TRISB = TRISB & 0xFC00; 
+	LATB=(LATB & 0xFC00) | 0x0100;
+	while(1){
+
+		AD1CON1bits.ASAM=1; 		// Start conversion 
+		while(IFS1bits.AD1IF==0);	// Wait while conversion not done 
+		IFS1bits.AD1IF=0;		//interrupt_Flag();
+		printInt(ADC1BUF0,10);		//print
+
+		printStr("\n");
+		if(ADC1BUF0>= 0 && ADC1BUF0 > 128){
+			time = 250;
+		}else if(ADC1BUF0>= 128 && ADC1BUF0 > 256){
+			time = 500;
+		}else if(ADC1BUF0>= 256 && ADC1BUF0 > 384){
+			time = 750;
+		}else if(ADC1BUF0>= 384 && ADC1BUF0 > 512){
+			time = 1000;
+		}else if(ADC1BUF0>= 512 && ADC1BUF0 > 640){
+			time = 1250;
+		}else if(ADC1BUF0>= 640 && ADC1BUF0 > 768){
+			time = 1500;
+		}else if(ADC1BUF0>= 768 && ADC1BUF0 > 896){
+			time = 1750;
+		}else if(ADC1BUF0>= 896 && ADC1BUF0 > 1024){
+			time = 2000;
+		}
+
+		LATB=(LATB & 0xFC00) | 0x0100;
+		LATB = LATB | cobra[posicao];
+		delay(time);
+		
+		if(posicao++ >= 7){
+			posicao=0;
+		}
+		 
+		
+	}
+	return 0;
+}
+void delay(unsigned int n_intervals)
+{
+	volatile unsigned int i;
+	for(; n_intervals != 0; n_intervals--)
+		for(i = 5000; i != 0; i--)
+		;
+	;
+} 

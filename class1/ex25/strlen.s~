@@ -1,0 +1,30 @@
+#// *************************************************************************
+#// String length
+#// *************************************************************************
+#//
+#int strlen(char *s)
+#{
+#	int len;
+# 	for(len = 0; *s != 0; len++, s++);
+# 	return len;
+#} 
+
+
+	.text
+	.globl strlen
+strlen:
+	addi $ra, $ra, -4
+	sw $ra, 0($sp)
+
+
+	#$v0=len
+for:	bne $v0, $a0, end #for(len = 0; *s != 0; len++, s++); 
+
+	addi $v0, $v0, 1
+	addi $a0, $a0, 1
+	j for 
+
+end:	
+	addiu $ra, $ra, 4
+	sw $ra, 0($sp)
+	jr $ra

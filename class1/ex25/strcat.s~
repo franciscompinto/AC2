@@ -1,0 +1,31 @@
+#// *************************************************************************
+#// String concatenate
+#// *************************************************************************
+#// char *strcat(char *dst, char *src) 
+
+
+
+	.text
+	.globl strlen
+strlen:
+	addi $ra, $ra, -8
+	sw $ra, 0($sp)
+	sw $s0, 4($sp)
+
+	move $s0, $a0 		# char *rp=dst
+
+for:	sb $t1, 0($a0)
+
+	beq $t1, 0, end 	#for(; *dst != 0; dst++); 
+	
+ 	addi $a0, $a0, 1
+	j for
+end:	
+	jal strcpy
+	
+	move $v0, $s0
+	
+	lw $ra, 0($sp)
+	sw $v0, 8($sp)
+	addiu $ra, $ra, 8
+	jr $ra

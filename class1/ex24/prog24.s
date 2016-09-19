@@ -1,0 +1,87 @@
+#// *************************************************************************
+#// Programa 3 – teste dos system calls de leitura e impressão de inteiros
+#// *************************************************************************
+#void main()
+#{
+#	int value;
+#	while (1)
+#	{
+#		printStr("\nIntroduza um numero (sinal e módulo): ");
+#		value = readInt10();
+#		printStr("\nValor lido em base 2: ");
+#		printInt(value, 2);
+#		printStr("\nValor lido em base 16: ");
+#		printInt(value, 16);
+#		printStr("\nValor lido em base 10 (unsigned): ");
+#		printInt(value, 10);
+#		printStr("\nValor lido em base 10 (signed): ");
+#		printInt10(value);
+#	}
+#}	
+
+	.data
+out:	.asciiz "\nIntroduza um numero (sinal e modulo): "
+out2: 	.asciiz "\nValor lido em base 2: "
+out16: 	.asciiz "\nValor lido em base 16: "
+out10u: .asciiz "\nValor lido em base 10 (unsigned): "
+out10: 	.asciiz "\nValor lido em base 10 (signed): "
+
+	.text
+	.globl main
+main:
+while: bne $0, 0, end	#while(1)
+
+	la $a0, out	#printStr(out);
+	li $v0,8
+	syscall
+
+	li $v0,5 	#value = readInt10();
+	syscall
+	move $t0, $v0
+
+
+	la $a0, out2	#printStr(out2);
+	li $v0,8
+	syscall
+
+	move $a0, $t0	#printInt(value, 2);
+	li $a1, 2
+	li $v0,6 	
+	syscall
+	
+
+	la $a0, out16	#printStr(out16);
+	li $v0,8
+	syscall
+	
+	move $a0, $t0	#printInt(value, 16);
+	li $a1, 16
+	li $v0,6 	
+	syscall
+
+	la $a0, out16	#printStr(out10u);
+	li $v0,8
+	syscall
+	
+
+	move $a0, $t0	#printInt(value, 10);
+	li $a1, 10
+	li $v0,6 	
+	syscall
+
+	la $a0, out16	#printStr(out10);
+	li $v0,8
+	syscall
+
+
+	move $a0, $t0	#printInt10(value);
+	li $v0, 7
+	syscall
+
+
+
+	j while
+
+end:
+	li $v0, 0 #return 0
+	jr $ra

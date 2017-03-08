@@ -1,7 +1,10 @@
 # AC2
 
-###### Author:  Francisco Pinto
+###### Author: 
+</p>-Francisco Pinto </p>
+</p>-Rafael Almeida  </p>
 
 
 ==================
-.this is a resolution for the AC2.<return> Necessary det pic32 board and AC2 bootloader<return> 
+ </p>.this is a resolution for the AC2.</p> 
+  </p>Necessary det pic32 board and AC2 bootloader </p>

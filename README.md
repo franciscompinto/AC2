@@ -6,5 +6,5 @@
 
 
 ==================
- </p>.this is a resolution for the AC2.</p> 
-  </p>Necessary det pic32 board and AC2 bootloader </p>
+ </p>This is a resolution for the AC2.</p> 
+ </p>Necessary detpic32 board and AC2 bootloader </p>

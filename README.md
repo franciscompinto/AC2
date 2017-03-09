@@ -1,8 +1,8 @@
 # AC2
 
 ###### Author: 
-</p>-Francisco Pinto </p>
-</p>-Rafael Almeida  </p>
+</p>Francisco Pinto </p>
+</p>Rafael Almeida  </p>
 
 
 ==================
